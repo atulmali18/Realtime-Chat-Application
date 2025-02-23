@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { fullname: { firstname, lastname }, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   const isUserAlreadyExist = await userModel.findOne({ email });
   if (isUserAlreadyExist) {
@@ -24,8 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const hashedPassword = await userModel.hashPassword(password);
   const newUser = await userService.createUser({
-    firstname,
-    lastname,
+    fullName,
     email,
     password: hashedPassword,
   });
@@ -59,7 +58,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   res.status(200).json({ 
     _id: user._id,
-    fullName: `${user.fullname.firstname} ${user.fullname.lastname}`,
+    fullName: user.fullName,
     email: user.email,
     profilePic: user.profilePic || null, // Assuming the user model has a profilePic field
     token: token,
@@ -90,7 +89,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 const updateUserProfile = asyncHandler(async (req, res) => {
   const {profilePic} = req.body;
   const userId = req.user._id;
-  if(!profilePicture) {
+  if(!profilePic) {
     return res.status(400).json({ message: 'Profile picture is required' });
   }
 
@@ -104,7 +103,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 const checkAuth = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'User Verified' });
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log("Error in checkAuth controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 

@@ -9,9 +9,7 @@ router.post(
   "/register",
   [
     body("email").isEmail().withMessage("Please enter a valid email"),
-    body("fullname.firstname")
-      .isLength({ min: 3 })
-      .withMessage("First name is required"),
+    body("fullName").isLength({ min: 3 }).withMessage("fullName is required"),
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long"),
@@ -40,7 +38,7 @@ router.put(
 
 router.get('/check', authMiddleware.authUser, userController.checkAuth);
 
-router.get("/logout", authMiddleware.authUser, userController.logoutUser);
+router.post("/logout", authMiddleware.authUser, userController.logoutUser);
 
 
 export default router;

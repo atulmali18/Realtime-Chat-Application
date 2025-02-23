@@ -3,16 +3,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
-  fullname: {
-    firstname: {
-      type: String,
-      required: [true, 'First name is required'],
-      minlength: [3, 'First name must be at least 3 characters']
-    },
-    lastname: {
-      type: String,
-      minlength: [3, 'Last name must be at least 3 characters']
-    }
+  fullName: {
+    type: 'string',
+    required: [true, 'Fullname is required'],
+    minlength: [3, 'Fullname must be at least 3 characters']
   },
   email: {
     type: String,
@@ -28,7 +22,6 @@ const userSchema = new mongoose.Schema({
   },
   profilePic: {
     type: String,
-    default: 'https://res.cloudinary.com/dkkgmzpqd/image/upload/v1623303250/default-profile-picture.jpg'
   }
 },
   { timestamps: true }
