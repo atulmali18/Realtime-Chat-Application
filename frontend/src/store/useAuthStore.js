@@ -36,7 +36,9 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("Error in signup:", error);
+      const errorMessage = error.response?.data?.message || "An error occurred during signup";
+      toast.error(errorMessage);
     } finally {
       set({ isSigningUp: false });
     }
@@ -51,7 +53,9 @@ export const useAuthStore = create((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("Error in login:", error);
+      const errorMessage = error.response?.data?.message || "An error occurred during login";
+      toast.error(errorMessage);
     } finally {
       set({ isLoggingIn: false });
     }
@@ -64,7 +68,9 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Logged out successfully");
       get().disconnectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("Error in logout:", error);
+      const errorMessage = error.response?.data?.message || "An error occurred during logout";
+      toast.error(errorMessage);
     }
   },
 
@@ -75,8 +81,9 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      console.log("error in update profile:", error);
-      toast.error(error.response.data.message);
+      console.error("Error in update profile:", error);
+      const errorMessage = error.response?.data?.message || "An error occurred during profile update";
+      toast.error(errorMessage);
     } finally {
       set({ isUpdatingProfile: false });
     }
