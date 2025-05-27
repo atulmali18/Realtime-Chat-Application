@@ -32,9 +32,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const token = await newUser.generateAuthToken(newUser._id);
   res.cookie('token', token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    secure: process.env.NODE_ENV !== 'development',
     httpOnly: true,
-    sameSite: 'strict',
+    secure: true,      
+    sameSite: "None",   
   });
 
   res.status(201).json({ newUser, token });
