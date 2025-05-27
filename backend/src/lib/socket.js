@@ -6,8 +6,10 @@ const app = express();
 const server = http.createServer(app);
 
 const io = socketIO(server, {
-  cors: {
-    origin: "https://realtime-chat-application-oth1rn8ek-atulmali18s-projects.vercel.app",
+  cors: {[
+      "https://realtime-chat-application-oth1rn8ek-atulmali18s-projects.vercel.app",
+      "http://localhost:5173"
+    ]
     methods: ["GET", "POST"],
     credentials: true
   }
