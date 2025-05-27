@@ -21,10 +21,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://realtime-chat-application-oth1rn8ek-atulmali18s-projects.vercel.app/ "http://localhost:5173"],
+    origin: [
+      "https://realtime-chat-application-oth1rn8ek-atulmali18s-projects.vercel.app",
+      "http://localhost:5173"
+    ],
     credentials: true,
   })
 );
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
