@@ -5,9 +5,9 @@ import express from "express";
 const app = express();
 const server = http.createServer(app);
 
-const io = socketIO(server, {
+const io = new Server(server, {
   cors: {
-    "http://localhost:5173",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true
   }
