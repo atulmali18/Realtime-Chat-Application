@@ -36,6 +36,12 @@ router.put(
   userController.updateUserProfile
 );
 
+router.delete(
+  "/delete-account",
+  authMiddleware.authUser,
+  userController.deleteUserAccount
+);
+
 router.get('/check', authMiddleware.authUser, userController.checkAuth);
 
 router.post("/logout", authMiddleware.authUser, userController.logoutUser);

@@ -3,7 +3,8 @@ import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
 
 export const ProfilePage = () => {
-  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const { authUser, isUpdatingProfile, updateProfile, deleteAccount } =
+    useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
 
   useEffect(() => {
@@ -49,7 +50,9 @@ export const ProfilePage = () => {
                   bg-base-content hover:scale-105
                   p-2 rounded-full cursor-pointer 
                   transition-all duration-200
-                  ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
+                  ${
+                    isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
+                  }
                 `}
               >
                 <Camera className="w-5 h-5 text-base-200" />
@@ -64,7 +67,9 @@ export const ProfilePage = () => {
               </label>
             </div>
             <p className="text-sm text-zinc-400">
-              {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+              {isUpdatingProfile
+                ? "Uploading..."
+                : "Click the camera icon to update your photo"}
             </p>
           </div>
 
@@ -74,7 +79,9 @@ export const ProfilePage = () => {
                 <User className="w-4 h-4" />
                 Full Name
               </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.fullName}</p>
+              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">
+                {authUser?.fullName}
+              </p>
             </div>
 
             <div className="space-y-1.5">
@@ -82,7 +89,9 @@ export const ProfilePage = () => {
                 <Mail className="w-4 h-4" />
                 Email Address
               </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
+              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">
+                {authUser?.email}
+              </p>
             </div>
           </div>
 
@@ -96,6 +105,24 @@ export const ProfilePage = () => {
               <div className="flex items-center justify-between py-2">
                 <span>Account Status</span>
                 <span className="text-green-500">Active</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-t border-zinc-700">
+                <span className="cursor-pointer">Delete Account</span>
+                <button
+                  className="text-red-500 hover:text-red-700 transition-colors"
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to delete your account? This action cannot be undone."
+                      )
+                    ) {
+                      deleteAccount();
+                      console.log("Account deletion initiated");
+                    }
+                  }}
+                >
+                  Delete Account
+                </button>
               </div>
             </div>
           </div>

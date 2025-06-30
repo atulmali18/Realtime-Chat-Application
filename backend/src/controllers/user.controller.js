@@ -102,6 +102,18 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
+const deleteUserAccount = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  await userModel.findByIdAndDelete(userId);
+  res.clearCookie('token');
+  res.status(200).json({ message: 'User account deleted successfully' });
+});
+
 const checkAuth = asyncHandler(async (req, res) => {
   try {
     res.status(200).json(req.user);
@@ -112,4 +124,4 @@ const checkAuth = asyncHandler(async (req, res) => {
 });
 
 
-export default { registerUser, loginUser, getUserProfile, logoutUser, updateUserProfile, checkAuth};
+export default { registerUser, loginUser, getUserProfile, logoutUser, updateUserProfile, deleteUserAccount, checkAuth};
